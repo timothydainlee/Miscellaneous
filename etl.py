@@ -1,14 +1,16 @@
 import time
 import numpy as np
 from selenium import webdriver
+import chromedriver_autoinstaller
 
 
 URL = "https://etl.snu.ac.kr"
-ID = "ID"
-PW = "PW"
+ID = "dalee"
+PW = "79Dlsekdl!@#"
 
 
 if __name__ == "__main__":
+    chromedriver_autoinstaller.install()
     driver = webdriver.Chrome()
     driver.get(url=URL)
     time.sleep(5)
@@ -22,6 +24,14 @@ if __name__ == "__main__":
     # change password page
     if driver.title == "::: Change Password :::":
         driver.find_element_by_name("next_bt").click()
+    time.sleep(5)
+
+    # close all notices
+    notice_elements = driver.find_elements_by_class_name("close_notice")
+    notice_elements.reverse()
+    for e in notice_elements:
+        e.click()
+        time.sleep(1)
 
     # get all class information and ask course to complete
     course_elements = driver.find_elements_by_class_name("course-title")
